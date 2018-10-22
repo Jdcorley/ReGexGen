@@ -1,0 +1,5 @@
+= regexgen
+
+Generate this with
+    regexgen _doc
+After you have described your command line interface

@@ -1,0 +1,6 @@
+= regexgen
+
+Describe your project here
+
+:include:regexgen.rdoc
+

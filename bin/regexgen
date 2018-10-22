@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+require 'gli'
+begin # XXX: Remove this begin/rescue before distributing your app
+require 'regexgen'
+rescue LoadError
+  STDERR.puts "In development, you need to use `bundle exec bin/regexgen` to run your app"
+  STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
+  STDERR.puts "Feel free to remove this message from bin/regexgen now"
+  exit 64
+end
+
+class App
+  extend GLI::App
+
+  program_desc 'RegExGen is CLI that generates a regular expression for you by simply inputing the pattern you would like to match.'
+
+  version Regexgen::VERSION
+
+  subcommand_option_handling :normal
+  arguments :strict
+
+  desc 'Match is a specific pattern of characters you would like your RegEx to match EXACTLY.'
+  arg_name 'Arguments take the form of a string and should be EXACTLY what you want your regex to match.'
+
+  command :match do |c|
+    c.desc 'Describe a switch to pattern'
+    c.switch :s
+
+    c.desc 'Describe a flag to pattern'
+    c.default_value 'default'
+    c.flag :f
+    c.action do |global_options,options,args|
+
+      arguments = args.pop
+      backslash = '/'
+
+      puts backslash+arguments+backslash
+      puts "pattern command ran."
+    end
+  end
+
+  desc 'Range is a specific range of characters or integers you would like your RegEx to match.'
+  arg_name 'Arguments take the form of a string with a dash (ex: "1-10", "A-B").'
+  command :range do |c|
+    c.action do |global_options,options,args|
+      puts "range command ran."
+    end
+  end
+
+  pre do |global,command,options,args|
+    # Pre logic here
+    # Return true to proceed; false to abort and not call the
+    # chosen command
+    # Use skips_pre before a command to skip this block
+    # on that command only
+    true
+  end
+
+  post do |global,command,options,args|
+    # Post logic here
+    # Use skips_post before a command to skip this
+    # block on that command only
+  end
+
+  on_error do |exception|
+    # Error logic here
+    # return false to skip default error handling
+    true
+  end
+end
+
+exit App.run(ARGV)
