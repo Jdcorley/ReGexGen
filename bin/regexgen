@@ -30,12 +30,10 @@ class App
     c.default_value 'default'
     c.flag :f
     c.action do |global_options,options,args|
-
-      arguments = args.pop
-      backslash = '/'
-
-      puts backslash+arguments+backslash
-      puts "pattern command ran."
+      match_pattern = args.pop
+      regular_expression = '/'+match_pattern+'/'
+      puts 'Your Regular Expression is: '+ regular_expression
+      puts 'Boolean: what_you_would_like_to_compare.matches?('+regular_expression+')'
     end
   end
 
